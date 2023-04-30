@@ -25,7 +25,8 @@ fig01A <-
   mutate(x = x - first(x), y = y - first(y)) |>
   ungroup() |>
   add_column(coffee = "Dark Roasted Coffee", .before = 1L) |>
-  rename(t = x, current = y)
+  rename(t = x, current = y) |>
+  drop_na(current)
 
 fig01B_ACh <- read_data(file.path(fig01_path, "fig01B-ACh.csv"))
 fig01B_coffee <- read_data(file.path(fig01_path, "fig01B-coffee.csv"))
@@ -46,7 +47,8 @@ fig01B <-
   mutate(x = x - first(x), y = y - first(y)) |>
   ungroup() |>
   add_column(coffee = "Green Bean Coffee", .before = 1L) |>
-  rename(t = x, current = y)
+  rename(t = x, current = y) |>
+  drop_na(current)
 
 
   add_column(bind_rows(
@@ -63,14 +65,16 @@ fig01A_dark_roast_coffee <-
   mutate(treatment = cut(x, 0:4, labels = treatments), .before = 2L) |>
   select(-"x") |>
   rename(nr_resp = y) |>
-  add_column(coffee = "Dark Roasted Coffee", .before = 1L)
+  add_column(coffee = "Dark Roasted Coffee", .before = 1L) |>
+  drop_na(nr_resp)
 
 fig01B_green_bean_coffee <-
   read_data(file.path(fig01_path, "fig01B-green-bean-coffee.csv")) |>
   mutate(treatment = cut(x, 0:4, labels = treatments), .before = 2L) |>
   select(-"x") |>
   rename(nr_resp = y) |>
-  add_column(coffee = "Green Bean Coffee", .before = 1L)
+  add_column(coffee = "Green Bean Coffee", .before = 1L) |>
+  drop_na(nr_resp)
 
 fig01A1 <- fig01A
 fig01A2 <- fig01A_dark_roast_coffee
