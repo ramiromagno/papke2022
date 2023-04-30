@@ -19,6 +19,7 @@ fig06 <- read_data(file.path(fig06_path, "fig06.csv")) |>
     .before = 2L
   ) |>
   select(-"x") |>
-  rename(nr_resp = y)
+  rename(nr_resp = y) |>
+  mutate(signif = if_else(treatment %in% c("nMP HS", "dMP HS"), "**", ""))
 
 usethis::use_data(fig06, overwrite = TRUE)
