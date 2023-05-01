@@ -9,17 +9,17 @@ fig06_path <- here::here("data-raw", "fig06")
 #
 # Figure 6
 #
-treatments_general <- rep(c("Caf", "Trg", "Tau", "Agm", "Spr", "2AP", "Lut", "nMP", "dMP"), each = 2)
-treatments <- paste(treatments_general, c("LS", "HS"))
+treatment <- rep(c("Caf", "Trg", "Tau", "Agm", "Spr", "2AP", "Lut", "nMP", "dMP"), each = 2)
+sensitivity <-rep_len(c("LS", "HS"), length.out = length(treatment))
 
 fig06 <- read_data(file.path(fig06_path, "fig06.csv")) |>
   mutate(
-    treatment_general = cut(x, 0:18, labels = treatments_general),
-    treatment = cut(x, 0:18, labels = treatments),
+    treatment = cut(x, 0:18, labels = treatment),
+    sensitivity = cut(x, 0:18, labels = sensitivity),
     .before = 2L
   ) |>
   select(-"x") |>
   rename(nr_resp = y) |>
-  mutate(signif = if_else(treatment %in% c("nMP HS", "dMP HS"), "**", ""))
+  mutate(signif = if_else(treatment %in% c("nMP", "dMP") & sensitivity %in% c("HS", "HS"), "**", ""))
 
 usethis::use_data(fig06, overwrite = TRUE)
