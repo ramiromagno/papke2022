@@ -85,8 +85,9 @@ fig03C <- read_data(file.path(fig03_path, "fig03C.csv")) |>
 #
 # Figure 3D
 #
+treatments2 <- c("controls", "GBC", "Ach-2", "DRC + ACh", "ACh-3")
 fig03D <- read_data(file.path(fig03_path, "fig03D.csv")) |>
-  mutate(treatment = cut(x, 0:5, labels = treatments), .before = 2L) |>
+  mutate(treatment = cut(x, 0:5, labels = treatments2), .before = 2L) |>
   select(-"x") |>
   rename(nr_resp = y) |>
   add_column(receptor = "\u03B14(3)\u03B22(2)", coffee = "Green bean coffee", .before = 1L)
@@ -95,7 +96,7 @@ fig03D <- read_data(file.path(fig03_path, "fig03D.csv")) |>
 # Figure 3E
 #
 fig03E <- read_data(file.path(fig03_path, "fig03E.csv")) |>
-  mutate(treatment = cut(x, 0:5, labels = treatments), .before = 2L) |>
+  mutate(treatment = cut(x, 0:5, labels = treatments2), .before = 2L) |>
   select(-"x") |>
   rename(nr_resp = y) |>
   add_column(receptor = "\u03B14(2)\u03B22(3)", coffee = "Green bean coffee", .before = 1L)
